@@ -1,17 +1,17 @@
 #line 1
 package Test::Differences;
 
-#line 262
+#line 284
 
-our $VERSION = "0.500"; # or "0.001_001" for a dev release
+our $VERSION = "0.61"; # or "0.001_001" for a dev release
 $VERSION = eval $VERSION;
 
 use Exporter;
 
 @ISA    = qw( Exporter );
-@EXPORT = qw( 
-  eq_or_diff 
-  eq_or_diff_text 
+@EXPORT = qw(
+  eq_or_diff
+  eq_or_diff_text
   eq_or_diff_data
   unified_diff
   context_diff
@@ -82,7 +82,7 @@ sub _flatten {
     my $type = shift;
     local $_ = shift if @_;
 
-    return [ split /^/m ] unless ref;
+    return [ split /^/m, _quote_str($_) ] unless ref;
 
     croak "Can't flatten $_" unless $type;
 
@@ -97,7 +97,10 @@ sub _flatten {
     else {
         die "unsupported ref type";
     }
-    if ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
+    if ( $type eq ARRAY_of_scalars) {
+        @recs = map { _quote_str($_) } @recs;
+    }
+    elsif ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
         ## Also copy the inner arrays if need be
         $_ = [@$_] for @recs;
     }
@@ -124,16 +127,24 @@ sub _flatten {
     }
 
     if ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
-        ## Convert undefs
+        ## Quote strings
         for my $rec (@recs) {
             for (@$rec) {
-                $_ = "<undef>" unless defined;
+                $_ = _quote_str($_);
             }
             $rec = join ",", @$rec;
         }
     }
 
     return \@recs;
+}
+
+sub _quote_str {
+    my $str = shift;
+    return 'undef' unless defined $str;
+    return $str if $str =~ /^[0-9]+$/;
+    $str =~ s{([\\\'])}{\\$1}g;
+    return "'$str'";
 }
 
 sub _identify_callers_test_package_of_choice {
@@ -185,11 +196,12 @@ sub eq_or_diff {
     if ($dump_it) {
         require Data::Dumper;
         local $Data::Dumper::Indent    = 1;
-        local $Data::Dumper::Sortkeys  = 1;
         local $Data::Dumper::Purity    = 0;
         local $Data::Dumper::Terse     = 1;
         local $Data::Dumper::Deepcopy  = 1;
         local $Data::Dumper::Quotekeys = 0;
+        local $Data::Dumper::Sortkeys =
+          exists $options->{Sortkeys} ? $options->{Sortkeys} : 1;
         ( $got, $expected ) = map
           [ split /^/, Data::Dumper::Dumper($_) ],
           @vals;
@@ -265,6 +277,6 @@ sub eq_or_diff {
     }
 }
 
-#line 616
+#line 650
 
 1;
