@@ -3,7 +3,7 @@ package Test::Name::FromLine;
 use strict;
 use warnings;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use Test::Builder;
 use File::Slurp;
@@ -18,13 +18,16 @@ my $ORIGINAL_ok = \&Test::Builder::ok;
 *Test::Builder::ok = sub {
 	$_[2] ||= do {
 		my ($package, $filename, $line) = caller($Test::Builder::Level);
-		$filename or return;
-		$filename = File::Spec->catfile($BASE_DIR, $filename);
-		my $file = $filecache{$filename} ||= [ read_file($filename) ];
-		my $lnum = $line;
-		$line = $file->[$lnum-1];
-		$line =~ s{^\s+|\s+$}{}g;
-		"L$lnum: $line";
+		if ($filename) {
+			$filename = File::Spec->catfile($BASE_DIR, $filename);
+			my $file = $filecache{$filename} ||= [ read_file($filename) ];
+			my $lnum = $line;
+			$line = $file->[$lnum-1];
+			$line =~ s{^\s+|\s+$}{}g;
+			"L$lnum: $line";
+		} else {
+			""; # invalid $Test::Builder::Level
+		}
 	};
 	goto &$ORIGINAL_ok;
 };
