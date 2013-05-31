@@ -4,11 +4,14 @@ author:
   - 'cho45 <cho45@lowreal.net>'
 build_requires:
   ExtUtils::MakeMaker: 6.36
+  Test::Differences: 0
+  Test::More: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.36
-distribution_type: module
-dynamic_config: 1
-generated_by: 'Module::Install version 1.04'
+  CPAN::Meta: 0
+  CPAN::Meta::Prereqs: 0
+  Module::Build: 0.38
+dynamic_config: 0
+generated_by: 'Minilla/v0.4.5, CPAN::Meta::Converter version 2.131490'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -16,14 +19,27 @@ meta-spec:
 name: Test-Name-FromLine
 no_index:
   directory:
-    - inc
     - t
     - xt
+    - inc
+    - share
+    - eg
+    - examples
+    - author
+provides:
+  Test::Name::FromLine:
+    file: lib/Test/Name/FromLine.pm
+    version: 0.10
 requires:
   File::Slurp: 0
   Filter::Util::Call: 0
   Test::Builder: 0
 resources:
-  license: http://dev.perl.org/licenses/
+  bugtracker: https://github.com/cho45/Test-Name-FromLine/issues
+  homepage: https://github.com/cho45/Test-Name-FromLine
   repository: git://github.com/cho45/Test-Name-FromLine.git
-version: 0.09
+version: 0.10
+x_contributors:
+  - 'mechairoi <ttsujikawa@gmail.com>'
+  - 'xaicron <xaicron@gmail.com>'
+  - 'Tatsuhiko Miyagawa <miyagawa@bulknews.net>'
