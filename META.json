@@ -27,6 +27,7 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "6.36",
             "Test::Differences" : "0",
+            "Test::Fatal" : "0",
             "Test::More" : "0"
          }
       },
@@ -56,7 +57,7 @@
    "provides" : {
       "Test::Name::FromLine" : {
          "file" : "lib/Test/Name/FromLine.pm",
-         "version" : "0.10"
+         "version" : "0.11"
       }
    },
    "release_status" : "stable",
@@ -70,7 +71,7 @@
          "web" : "https://github.com/cho45/Test-Name-FromLine"
       }
    },
-   "version" : "0.10",
+   "version" : "0.11",
    "x_contributors" : [
       "mechairoi <ttsujikawa@gmail.com>",
       "xaicron <xaicron@gmail.com>",

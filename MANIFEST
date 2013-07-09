@@ -14,6 +14,7 @@ inc/Test/More.pm
 lib/Test/Name/FromLine.pm
 t/00_compile.t
 t/02_invalid_level.t
+t/03_pass.t
 t/Test.pm
 t/base.t
 t/chdir.t

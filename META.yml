@@ -5,6 +5,7 @@ author:
 build_requires:
   ExtUtils::MakeMaker: 6.36
   Test::Differences: 0
+  Test::Fatal: 0
   Test::More: 0
 configure_requires:
   CPAN::Meta: 0
@@ -29,7 +30,7 @@ no_index:
 provides:
   Test::Name::FromLine:
     file: lib/Test/Name/FromLine.pm
-    version: 0.10
+    version: 0.11
 requires:
   File::Slurp: 0
   Filter::Util::Call: 0
@@ -38,7 +39,7 @@ resources:
   bugtracker: https://github.com/cho45/Test-Name-FromLine/issues
   homepage: https://github.com/cho45/Test-Name-FromLine
   repository: git://github.com/cho45/Test-Name-FromLine.git
-version: 0.10
+version: 0.11
 x_contributors:
   - 'mechairoi <ttsujikawa@gmail.com>'
   - 'xaicron <xaicron@gmail.com>'
