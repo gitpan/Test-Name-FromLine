@@ -3,7 +3,7 @@ package Test::Name::FromLine;
 use strict;
 use warnings;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 use Test::Builder;
 use File::Slurp;
@@ -19,7 +19,7 @@ my $ORIGINAL_ok = \&Test::Builder::ok;
 	@_ = @_; # for pass and fail
 	$_[2] = do {
 		my ($package, $filename, $line) = caller($Test::Builder::Level);
-		undef $filename if $filename eq '-e';
+		undef $filename if $filename && $filename eq '-e';
 		if ($filename) {
 			$filename = File::Spec->rel2abs($filename, $BASE_DIR);
 			my $file = $filecache{$filename} ||= [ read_file($filename) ];
